@@ -1,6 +1,6 @@
 // Saves the app on first visit and always opens from that saved copy.
 // It never refreshes itself in the background. A new version is only picked up when VERSION changes here.
-var VERSION='wl-v120';
+var VERSION='wl-v121';
 var CORE=['./','index.html','manifest.webmanifest','icon-192.png','icon-512.png','icon-180.png'];
 self.addEventListener('install',function(e){
   e.waitUntil(caches.open(VERSION).then(function(c){

@@ -728,7 +728,7 @@ function viewSetup(){
   var list=S.ex.filter(function(e){
     if(q&&e.name.toLowerCase().indexOf(q)<0)return false;
     return true;
-  }).sort(function(x,y){return x.name.localeCompare(y.name,undefined,{sensitivity:'base',ignorePunctuation:true})});
+  }).map(function(e,i){return {e:e,pg:(e.pg!=null?e.pg:Math.floor(S.ex.indexOf(e)/14)),i:S.ex.indexOf(e)}}).sort(function(x,y){return x.pg-y.pg||x.i-y.i}).map(function(o){return o.e});
   var wkU=weekOf(fromKey(U.date));
   var h='<div class="top"><h1>Exercises</h1><div class="sub">'+S.ex.length+' total</div></div>'+whoHtml();
   h+='<div class="tools"><input type="search" id="q" placeholder="Search exercises" value="'+esc(U.q)+'" aria-label="Search exercises">'+
@@ -746,7 +746,7 @@ function viewSetup(){
       '<div class="hint" style="margin:0 0 8px">'+(S.lastBackup?'Last backup copied '+new Date(S.lastBackup).toLocaleDateString()+'. ':'No backup copied yet. ')+'Storage protection on this phone: '+(U.persisted===true?'on':U.persisted===false?'off (your phone decides)':'checking')+'.</div><textarea id="bk" aria-label="Backup data" readonly>'+esc(JSON.stringify(S,function(k,v){return k==='admin'?undefined:v}))+'</textarea><div class="tools"><button class="btn" data-a="copy">Copy this person</button>'+(PPL.list.length>1?'<button class="btn" data-a="copyall">Copy everyone</button>':'')+'</div>'+(U.allText?'<div class="hint" style="margin:8px 0">This text has all '+PPL.list.length+' people. Paste it somewhere safe.</div><textarea id="bkall" aria-label="Backup of everyone" readonly>'+esc(U.allText)+'</textarea>':'')+
       ''+(S.admin?'<textarea id="rs" placeholder="Paste a backup here" aria-label="Paste backup to restore"></textarea><div class="tools"><button class="btn" data-a="restore">Restore</button><span id="rmsg" class="hint"></span></div>':'<span id="rmsg" class="hint"></span>');
   }
-  h+='<div class="hint" style="margin-top:18px">App version 120.</div>';
+  h+='<div class="hint" style="margin-top:18px">App version 121.</div>';
   if(S.admin)h+='<div class="sec"><h2>Start over</h2></div>';
   if(U.note&&S.admin)h+='<div class="hint" role="status" style="margin:0 0 10px">'+esc(U.note)+'</div>';
   if(!S.admin){}
